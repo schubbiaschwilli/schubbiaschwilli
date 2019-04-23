@@ -52,8 +52,6 @@ for(j in 1:Npaths)
    a<-BSMOption(PutCallFlag,S,T,K,r,sigma,"Delta") # stock position<-delta
    b<-V-a*S # rest in bank, self-fin. Cond.
    
-   K0<-S
-   
    # Loop over Nhedgepoints
    for(i in 1:Nhedgepoints) 
    {
@@ -64,8 +62,6 @@ for(j in 1:Npaths)
       V<-a*S+b*exp(r*dt)
       a<-BSMOption(PutCallFlag,S,T-i*dt,K,r,sigma,"Delta")
       b<-V-a*S
-
-      K0<-S
    }
    
    S_t[j]<-S
