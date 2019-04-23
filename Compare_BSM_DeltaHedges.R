@@ -65,9 +65,7 @@ for(k in 1:length(Nhedgepoints_List))
       V_DeltaHedge<-BSMOption(PutCallFlag,S,T,K,r,sigma,"Price"); # initial investment
       a_DeltaHedge<-BSMOption(PutCallFlag,S,T,K,r,sigma,"Delta"); # stock position = delta
       b_DeltaHedge<-V_DeltaHedge-a_DeltaHedge*S; # rest in bank; self-fin. Cond.
-      
-      K0 = S
-      
+            
       # Loop over i=1 to Nhedgepoints
       for(i in 1:Nhedgepoints) 
       {
@@ -78,8 +76,6 @@ for(k in 1:length(Nhedgepoints_List))
          V_DeltaHedge<-a_DeltaHedge*S+b_DeltaHedge*exp(r*dt);
          a_DeltaHedge<-BSMOption(PutCallFlag,S,T-i*dt,K,r,sigma,"Delta");
          b_DeltaHedge<-V_DeltaHedge-a_DeltaHedge*S;
-   
-         K0<-S;
       }
       
       S_t[j]<-S;
