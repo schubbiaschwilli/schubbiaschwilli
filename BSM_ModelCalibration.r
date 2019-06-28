@@ -36,7 +36,7 @@ for(i in 1:nrow(result))
    data <- subset(EurexOptionsDax, OptionType == 'Call' & Handelstag == as.POSIXct(result[i,]$Handelstag, tz="UTC") & Moneyness >= 0.8 & Moneyness <= 1.2 & t_delta >= 1/12 & t_delta <= 1)
    
    # Fit via nlsLM
-   Price<-data$TäglicherAbrechnungspreis
+   Price<-data$TaeglicherAbrechnungspreis
    OptionType<-data[1,"OptionType"]
    S<-data[1,"SchlusspreisBasiswert"]
    r<-log(1+data[1,"EONIA"])
