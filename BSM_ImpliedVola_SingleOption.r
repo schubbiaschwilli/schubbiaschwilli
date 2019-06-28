@@ -67,7 +67,7 @@ ImpliedVola<-function(Price,OptionType,S,T,K,r)
 
 for(i in 1:nrow(data))
 {
-   Price <- data[i,]$TäglicherAbrechnungspreis
+   Price <- data[i,]$TaeglicherAbrechnungspreis
    OptionType <- data[i,]$OptionType
    S <- data[i,]$SchlusspreisBasiswert
    r <- log(1+data[i,]$EONIA)
