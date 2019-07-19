@@ -164,7 +164,7 @@ PlotRegression <- function(model, DVF, formula)
 }
 
 fff <- function(x){
-   # Formula For Function
+   # Format For Function
    if(x<0) {s="-"}
    else {s="+"}
    
