@@ -144,6 +144,9 @@ ggplot(data=tmp, aes(x=Handelstag, y=value, colour=factor(variable, labels = c("
    theme_bw(base_size=16) + theme(legend.position="bottom") + theme(legend.title=element_blank())
 
 ### Plot Single day
+day <- as.POSIXct("2016-04-01", tz="UTC")
+data <- subset(EurexOptionsDax, OptionType == 'Call' & Handelstag == day & Moneyness >= 0.8 & Moneyness <= 1.2 & t_delta >= 1/12 & t_delta <= 1)
+
 PlotRegression <- function(model, DVF, formula)
 {
    main <- paste("DFV Model ", DVF, "; ", data$OptionType[1] , "s Handelstag ", format(day, "%d-%m-%Y"), sep='')
@@ -167,9 +170,6 @@ fff <- function(x){
    
    return(paste(s, "\\;", format(abs(x),digits=4), sep=""))
 }
-
-day <- as.POSIXct("2016-04-01", tz="UTC")
-data <- subset(EurexOptionsDax, OptionType == 'Call' & Handelstag == day & Moneyness >= 0.8 & Moneyness <= 1.2 & t_delta >= 1/12 & t_delta <= 1)
 
 # Model 1 (a_0 + a_1 K + a_2 K^2)
 model1 <- lm(ImpliedVola  ~ StrikePrice + I(StrikePrice^2), data = data)
