@@ -160,8 +160,6 @@ PlotRegression <- function(model, DVF, formula)
    segments(obs$x, obs$y, pred$x, pred$y)
 }
 
-right <- function(x,n){substring(x,nchar(x)-n+1)}
-
 fff <- function(x){
    # Formula For Function
    if(x<0) {s="-"}
