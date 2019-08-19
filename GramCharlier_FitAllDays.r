@@ -79,8 +79,6 @@ for(i in 1:nrow(GCModel))
 # Create plots
 library("reshape2")
 library("ggplot2")
-library("latex2exp")
-library("scatterplot3d")
 
 # Plot parameter timeseries
 tmp <- melt(GCModel[,c(1,2,3,4)], id="Handelstag")
