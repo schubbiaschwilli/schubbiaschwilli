@@ -93,4 +93,3 @@ ggplot(data=tmp, aes(x=Handelstag, y=value, color=factor(variable, labels = c("V
 tmp <- melt(GCModel[,c(1,5,6)], id="Handelstag")  # convert to long format
 tmp$Handelstag <- as.Date(tmp$Handelstag)
 ggplot(data=tmp, aes(x=Handelstag, y=value, color=factor(variable, labels = c("RMSE / S","RMSE / S with predicted parameters from previous market data")))) + geom_line(size = 1) + ggtitle("Gram-Charlier-Model") + scale_x_date(date_minor_breaks = "1 month") + theme_bw(base_size=16) + theme(legend.position="bottom") + theme(legend.title=element_blank())
-
