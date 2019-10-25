@@ -4,7 +4,7 @@ From <- 2009
 To <- 2018
 
 PDF_MJD <- function(x, mu, sigma, lambda, m, delta){
-   # Rama/Cont p. 111; gamma <-> mu, mu <-> m
+   # Cont/Tankov p. 111; gamma <-> mu, mu <-> m
    sum <- 0
    
    for(k in 0:170)
