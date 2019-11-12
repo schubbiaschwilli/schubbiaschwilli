@@ -1,16 +1,16 @@
-load("D:\\h_da\\_Blog\\Themen\\Options\\BSM_ImpliedVola_AllSingleOptions\\CreataDataFile\\EurexOptionsDaxPlus.RData")
-load("D:\\h_da\\Derivate\\Kurse\\Batch\\MertonJD\\Blog\\GitHub\\EurexOptionsDaxMJDParameterResults.RData")
-
-save(MJDParameter, file="D:\\h_da\\Derivate\\Kurse\\Batch\\MertonJD\\Blog\\GitHub\\EurexOptionsDaxMJDParameterResults.RData")
+load("...\\EurexOptionsDaxPlus.RData")
+load("...\\EurexOptionsDaxMJDParameterResults.RData")
 
 library(minpack.lm)
 library(scatterplot3d)
+library("reshape2")
+library("ggplot2")
 
 BSMOption <- function(PutCallFlag,S,T,K,r,sigma,Greek)
 {  # Vergleiche 'Four Things You Might Not Know About The Black-Scholes-Formula'
    if(PutCallFlag=="Call" && Greek=="Price")
    {
-      # Price Call vor Fälligkeit
+      # Price Call vor FÃ¤lligkeit
       d1<-(log(S/K)+(r+sigma^2/2)*T)/(sigma*sqrt(T))
       d2<-d1 - sigma * sqrt(T)
       value<-S*pnorm(d1, mean=0, sd=1) - K*exp(-r*T)*pnorm(d2, mean=0, sd=1)
@@ -79,9 +79,9 @@ for(i in 1:1)
    PutCallFlag<- OptionType[1]
    
    sigma<-MJDParameter$sigma[i]; #Volatility
-   lambda<-MJDParameter$lambda[i];  #Expected average number of events / Intensität
+   lambda<-MJDParameter$lambda[i];  #Expected average number of events / IntensitÃ¤t
    m<-MJDParameter$m[i];	#Expected value / Erwartungswert
-   delta<-MJDParameter$delta[i];	#Std.Dev. of jumps / Standardabweichung der Sprünge
+   delta<-MJDParameter$delta[i];	#Std.Dev. of jumps / Standardabweichung der SprÃ¼nge
    
    ### Def Plots
    layout(matrix(c(1,1,1,1,1,2,2,2,2),1))
@@ -143,23 +143,7 @@ for(i in 1:1)
    }
 }
 
-# Create plots
-library("reshape2")
-library("ggplot2")
-
 # Model RMSE_S v. RMSE_S  Fitted Previous
 tmp <- melt(MJDParameter[,c(1,13,14)], id="Handelstag")  # convert to long format
 tmp$Handelstag <- as.Date(tmp$Handelstag)
 ggplot(data=tmp, aes(x=Handelstag, y=value, color=factor(variable, labels = c("RMSE / S","RMSE / S with predicted parameters from previous market data")))) + geom_line(size = 1) + ggtitle("Merton-Jump-Diffusion-Model") + scale_x_date(date_minor_breaks = "1 month") + theme_bw(base_size=16) + theme(legend.position="bottom") + theme(legend.title=element_blank())
-
-
-
-
-
-# Plot parameter timeseries
-tmp <- melt(GCModel[,c(1,2,3,4)], id="Handelstag")
-tmp$Handelstag <- as.Date(tmp$Handelstag)
-ggplot(data=tmp, aes(x=Handelstag, y=value, color=factor(variable, labels = c("Volatility Per Year","One Period Skewness","One Period Kurtosis")))) + 
-   geom_line(size = 1) + ggtitle("Gram-Charlier-Model-Parameter") + scale_x_date(date_minor_breaks = "1 month") + theme_bw(base_size=16) + theme(legend.position="bottom") + 
-   theme(legend.title=element_blank())
-
