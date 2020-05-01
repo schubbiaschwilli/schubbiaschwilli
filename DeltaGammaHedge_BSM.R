@@ -27,9 +27,6 @@ BSMOption <- function(PutCallFlag,S,T,K,r,sigma,Greek)
       {return(-1 * BSMOption("Call",S,T,K,r,-1 * sigma,Greek))}
 }
 
-varianz <- function(x) {n=length(x) ; var(x) * n / (n-1)}
-stdabw <- function(x) {n=length(x) ; sqrt(var(x) * n / (n-1))}
-
 # Parameter
 PutCallFlag = "Call"; # Put or Call
 S_0 = 100;
@@ -137,12 +134,12 @@ Error_DeltaGammaHedge<-Payoff - Hedge_DeltaGammaHedge;
 		hist(Error_DeltaHedge, breaks = nclass.FD(Error_DeltaHedge), freq=FALSE, col = "gray", border="black", main = '' , xlab='Error DeltaHeding',ylab='relative frequencies') 
 		# Add NormalDistribution
 		x<-seq(floor(min(Error_DeltaHedge)), ceiling(max(Error_DeltaHedge)), by=0.05) 
-		points(x, dnorm(x, mean=mean(Error_DeltaHedge), sd=stdabw(Error_DeltaHedge)), type = "l", lwd=2, col=2)
+		points(x, dnorm(x, mean=mean(Error_DeltaHedge), sd=sd(Error_DeltaHedge)), type = "l", lwd=2, col=2)
 
 		hist(Error_DeltaGammaHedge, breaks = nclass.FD(Error_DeltaGammaHedge), freq=FALSE, col = "gray", border="black", main = '' , xlab='Error DeltaGammaHeding',ylab='relative frequencies') 
 		# Add NormalDistribution
 		x<-seq(floor(min(Error_DeltaGammaHedge)), ceiling(max(Error_DeltaGammaHedge)), by=0.05)
-		points(x, dnorm(x, mean=mean(Error_DeltaGammaHedge), sd=stdabw(Error_DeltaGammaHedge)), type = "l", lwd=2, col=2)
+		points(x, dnorm(x, mean=mean(Error_DeltaGammaHedge), sd=sd(Error_DeltaGammaHedge)), type = "l", lwd=2, col=2)
 
    # Plot Boxplot
 	   boxplot(Error_DeltaHedge, horizontal=TRUE, main='BoxPlot Error DeltaHedging')
