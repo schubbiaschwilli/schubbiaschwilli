@@ -42,12 +42,10 @@ getSymbols("^GDAXI", index.class="POSIXct", from=as.Date(ISOdate(From-1, 12, 30)
 results <- nlm(f=Likelihood_PDF_MJD, p=c(mu, sigma, lambda, m, delta), x=log_returns, iterlim=250)
 
 #### Plot probability density function ###
-stdabw <- function(x) {n=length(x) ; sqrt(var(x) * n / (n-1))}
-
 main<-paste(From, " - ", To, sep="")
 sub<-paste("mu: ", round(results$estimate[1],5) , "; sigma: ", round(results$estimate[2],5) , "; lambda: ", round(results$estimate[3],5) , "; m: ", round(results$estimate[4],5) , "; delta: ", round(results$estimate[5],5), sep="")
 hist(log_returns, breaks = nclass.FD(log_returns), freq=FALSE, col="gray", xlab=sub, main=main) # main="Histogramm der stetigen Renditen vs Normalverteilung"
-curve(dnorm(x, mean=mean(log_returns), sd=stdabw(log_returns)), col='blue', type="l", lwd=2, lty=2, add=TRUE)
+curve(dnorm(x, mean=mean(log_returns), sd=sd(log_returns)), col='blue', type="l", lwd=2, lty=2, add=TRUE)
 curve(PDF_MJD(x, mu, sigma, lambda, m, delta), col='red', type="l", lwd=2, lty=1, add=TRUE)
 
 #### Plot cumulative distribution function ###
