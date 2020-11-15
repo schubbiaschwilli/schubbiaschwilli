@@ -169,7 +169,7 @@ for i = 1:nrow(data)
 	if data[i,8] == -1
 		data[i,9] = Dates.DateTime(Dates.now())
 		data[i,8] = CEVOption(PutCallFlag=data[i,1],S=data[i,3],T=data[i,2],K=data[i,4],r=data[i,5],sigma=data[i,7],alpha=data[i,6])
-		data[i,10] = data[i,9] = Dates.DateTime(Dates.now())
+		data[i,10] = Dates.DateTime(Dates.now())
 	end
 end
 	
