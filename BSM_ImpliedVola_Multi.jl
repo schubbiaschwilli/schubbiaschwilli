@@ -1,5 +1,3 @@
-# Creates C:\_Data\h_da\Derivate\Kurse\Modells\CEV\Julia\BSM_ImpliedVola\Blog\Plots\ImpliedVola_*Handelstag*.png
-
 using Distributions
 using Plots
 using StatsPlots
@@ -9,10 +7,10 @@ using RData
 using CSV
 using HypothesisTests
 
-cd("C:/_Data/h_da/Derivate/Kurse/Modells/CEV/Julia/BSM_ImpliedVola/Blog/Output_Multi")
+cd()
 
 # Load data
-data = load("C:/_Data/h_da/_Blog/Themen/Options/BSM_ImpliedVola_AllSingleOptions/CreataDataFile/EurexOptionsDaxPlus.RData", convert=true)
+data = load(".../EurexOptionsDaxPlus.RData", convert=true)
 
 function BSMOption(;PutCallFlag,S,T,K,r,sigma,Greek)
 
@@ -163,18 +161,12 @@ CSV.write("MeanImpliedVolas.csv", Handelstage)
 
 
 # Histogram and QQPlot Deltas
-Mean_Deltas = Handelstage.Mean_Calls - Handelstage.Mean_Puts
-Histogram_Deltas = histogram(Mean_Deltas, title=string("Mean : ", round(mean(Mean_Deltas), digits=4)), xlabel="Mean(delta(sigmas))", ylabel="Counts", legend=false, size=(800,600))
-QQPlot_Deltas = plot(qqnorm(Mean_Deltas))
+	Mean_Deltas = Handelstage.Mean_Calls - Handelstage.Mean_Puts
+	Histogram_Deltas = histogram(Mean_Deltas, title=string("Mean : ", round(mean(Mean_Deltas), digits=4)), xlabel="Mean(delta(sigmas))", ylabel="Counts", legend=false, size=(800,600))
+	QQPlot_Deltas = plot(qqnorm(Mean_Deltas))
 
-plot(Histogram_Deltas, QQPlot_Deltas, layout=(1,2), size=(800,400))
-savefig("Deltas.png")
+	plot(Histogram_Deltas, QQPlot_Deltas, layout=(1,2), size=(800,400))
+	savefig("Deltas.png")
 
 OneSampleTTest(Mean_Deltas)
 JarqueBeraTest(Mean_Deltas)
-
-# Test Histograms - Didn't work
-#histogram([Handelstage.Mean_Calls,Handelstage.Mean_Puts])
-
-#histogram(Handelstage.Mean_Calls, bar_width=1/250, bar_edges=false)
-#histogram!(Handelstage.Mean_Puts, bar_width=1/250) # , bar_edges=false)
