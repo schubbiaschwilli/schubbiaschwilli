@@ -44,11 +44,10 @@ varianz<-function(x) {n=length(x) ; var(x) * n / (n-1)}
 stdabw<-function(x) {n=length(x) ; sqrt(var(x) * n / (n-1))}
 
 ### Simulation Engine ###
-for(k in 1:length(Nhedgepoints_List)) 
-{
+for(k in 1:length(Nhedgepoints_List)){
   Nhedgepoints<-Nhedgepoints_List[k]
   set.seed(123456);
-  dt = T/Nhedgepoints;
+  dt<-T/Nhedgepoints;
   
   # Data
   S_t<-rep(0, times=Npaths);
@@ -57,9 +56,8 @@ for(k in 1:length(Nhedgepoints_List))
   Error_DeltaHedge<-rep(0, times=Npaths);
   
   # Loop over j = 1 to Npaths
-  for(j in 1:Npaths) 
-  {
-    S = S_0;
+  for(j in 1:Npaths) {
+    S<-S_0;
     
     # DeltaHedge
     V_DeltaHedge<-BSMOption(PutCallFlag,S,T,K,r,sigma,"Price"); # initial investment
@@ -67,8 +65,7 @@ for(k in 1:length(Nhedgepoints_List))
     b_DeltaHedge<-V_DeltaHedge-a_DeltaHedge*S; # rest in bank; self-fin. Cond.
     
     # Loop over i=1 to Nhedgepoints
-    for(i in 1:Nhedgepoints) 
-    {
+    for(i in 1:Nhedgepoints){
       eps<-rnorm(1); # eps=random.normal() simulate outcome of N(0,1)
       S<-S*exp((mu-0.5*sigma^2)*dt+sigma*sqrt(dt)*eps);
       
