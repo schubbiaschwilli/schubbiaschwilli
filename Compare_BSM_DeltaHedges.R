@@ -3,15 +3,15 @@ BSMOption<-function(PutCallFlag,S,T,K,r,sigma,Greek)
 {
    if(PutCallFlag=="Call" && Greek=="Price" && T>0)
    {
-      d1=(log(S/K)+(r+sigma^2/2)*T) / (sigma*sqrt(T))
-      d2=d1 - sigma * sqrt(T)
+      d1 <- (log(S/K)+(r+sigma^2/2)*T) / (sigma*sqrt(T))
+      d2 <- d1 - sigma * sqrt(T)
       return(S * pnorm(d1, mean=0, sd=1) - K * exp(-r*T) * pnorm(d2, mean=0, sd=1)) 
    }
    if(PutCallFlag=="Call" && Greek=="Price" && T==0)
       {return(pmax(S-K,0))} 
    if(PutCallFlag=="Call" && Greek=="Delta" && T>0)
    {
-      d1=(log(S/K)+(r+sigma^2/2)*T) / (sigma*sqrt(T))
+      d1 <- (log(S/K)+(r+sigma^2/2)*T) / (sigma*sqrt(T))
       return(pnorm(d1, mean=0, sd=1)) 
    }
    if(PutCallFlag=="Call" && Greek=="Delta" && T==0)
@@ -25,14 +25,14 @@ BSMOption<-function(PutCallFlag,S,T,K,r,sigma,Greek)
 }
 
 ### Parameter ###
-PutCallFlag = "Call"; # Put or Call
-S_0 = 100;
-T = 1;
-K = S_0 * 1.15;
-r = 0.05;
-mu = 0.1;
-sigma = 0.2
-Npaths = 1000
+PutCallFlag <- "Call"; # Put or Call
+S_0 <- 100;
+T <- 1;
+K <- S_0 * 1.15;
+r <- 0.05;
+mu <- 0.1;
+sigma <- 0.2
+Npaths <- 1000
 
 Nhedgepoints_List<-c(seq(10, 100, 10), seq(100, 1000, 50))
 
@@ -91,22 +91,21 @@ for(k in 1:length(Nhedgepoints_List))
    Error_DeltaHedges_varianz[k]<-varianz(Error_DeltaHedge)
 }
 ### Plots ###
-library(minpack.lm)
 
-fit <- nlsLM(Error_DeltaHedges_stdabw ~ a*Error_DeltaHedges_Nhedgepoints^b, start=list(a=7.3787, b=-0.498) , control=nls.control(maxiter=2^10))
-
-a<-as.list(coef(fit))$a
-b<-as.list(coef(fit))$b             
+   ## Fit
+   library(minpack.lm)
+   fit <- nlsLM(Error_DeltaHedges_stdabw ~ a*Error_DeltaHedges_Nhedgepoints^b, start=list(a=7.3787, b=-0.498) , control=nls.control(maxiter=2^10))
+   a <- as.list(coef(fit))$a
+   b <- as.list(coef(fit))$b             
 
 plot(Error_DeltaHedges_Nhedgepoints, Error_DeltaHedges_stdabw, ylab="std. dev. Error Delta Hedges", xlab="# hedge points")
 lines((10:1000), a*(10:1000)^b, col = "red")
 legend("topright",legend=c(paste("y = ", round(a,4), " x^", round(b,4), sep="")), col = c("red"), lty=1, cex=1)
 
-###
-fit <- nlsLM(Error_DeltaHedges_varianz ~ a*Error_DeltaHedges_Nhedgepoints^b, start=list(a=53.54, b=-0.983) , control=nls.control(maxiter=2^10))
-
-a<-as.list(coef(fit))$a
-b<-as.list(coef(fit))$b             
+   ### Fit
+   fit <- nlsLM(Error_DeltaHedges_varianz ~ a*Error_DeltaHedges_Nhedgepoints^b, start=list(a=53.54, b=-0.983) , control=nls.control(maxiter=2^10))
+   a <- as.list(coef(fit))$a
+   b <- as.list(coef(fit))$b             
 
 plot(Error_DeltaHedges_Nhedgepoints, Error_DeltaHedges_varianz, ylab="Variance Error Delta Hedges", xlab="# hedge points")
 lines((10:1000), a*(10:1000)^b, col = "red")
