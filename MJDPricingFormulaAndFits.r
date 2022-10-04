@@ -108,7 +108,7 @@ for(i in 1:1)
 }
 
 # Plot Parameter over time
-layout(matrix(c(1,2,3,4),4))
+par(mfrow=c(4,1), mar=c(2, 2, 0.5, 0.1))
 plot(y=MJDParameter$sigma, x=MJDParameter$Handelstag, type='l', ylab="sigma", xlab="", col='red')
 plot(y=MJDParameter$lambda, x=MJDParameter$Handelstag, type='l', ylab="lambda", xlab="", col='black')
 plot(y=MJDParameter$m, x=MJDParameter$Handelstag, type='l', ylab="m", xlab="", col='blue')
